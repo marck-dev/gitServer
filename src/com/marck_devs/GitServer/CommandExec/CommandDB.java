@@ -1,10 +1,13 @@
 package com.marck_devs.GitServer.CommandExec;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Set;
 
 public final class CommandDB {
-    private HashMap<String, Command> commands = new HashMap<String, Command>();
+    private HashMap<String, Command> commands = new HashMap<>();
 
 //    ---------------------------------| SINGLETON |------------------------------
     private static CommandDB instace;
@@ -19,11 +22,11 @@ public final class CommandDB {
 
     private CommandDB(){}
 
-    public  void put(String key, Command value){
+    public  void put(@NotNull String key,@NotNull Command value){
         commands.put(key, value);
     }
 
-    public  Command getCommand(String key){
+    public  Command getCommand(@NotNull String key){
         return commands.get(key);
     }
 
@@ -31,11 +34,12 @@ public final class CommandDB {
         return commands;
     }
 
-    public  Set<String> getKeys(){
+    @Contract(pure = true)
+    public Set<String> getKeys(){
         return commands.keySet();
     }
 
-    public  boolean existsKey(String key){
+    public  boolean existsKey(@NotNull String key){
         return commands.containsKey(key);
     }
 }
