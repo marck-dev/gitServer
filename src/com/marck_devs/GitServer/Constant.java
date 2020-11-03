@@ -9,7 +9,7 @@ public final class Constant {
     public static int LOGGER_PORT = 3402;
     public static int COMMAND_PORT = 1513;
     public static String REPO_HOME = "./";
-    public static final String REPO_EXT = "";
+    public static final String REPO_EXT = ".git";
     public static final String PROPERTIES_FILE = "conf.properties";
 
     private static Properties config;

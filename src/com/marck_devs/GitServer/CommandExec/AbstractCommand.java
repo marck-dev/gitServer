@@ -33,12 +33,13 @@ public abstract class AbstractCommand implements  Command{
         this.version = version;
         this.desc = desc;
         this.command = command;
+        load();
     }
 
     public void load(@Nullable String name){
         String key = name;
         if(name == null)
-            key = this.getClass().getName();
+            key = command;
         CommandDB.instace().put(key, this);
     }
 
@@ -68,7 +69,7 @@ public abstract class AbstractCommand implements  Command{
         if(!args.get(0).equalsIgnoreCase(command))
             throw new CommandNotFoundException("No se ha encontrado el commando");
         String repo = Constant.REPO_HOME + args.get(1) + Constant.REPO_EXT;
-        if(!args.get(1).isEmpty() && !Files.exists(Paths.get(repo))){
+        if(!args.get(1).isEmpty() && !this.getClass().equals(CommandMkDir.class) && !Files.exists(Paths.get(repo))){
             throw new RepoNotFoundException("Repo "+ repo + " not found");
         }
 
@@ -162,8 +163,4 @@ public abstract class AbstractCommand implements  Command{
     }
 
 
-    @Override
-    public void run() throws CommandErrorException {
-
-    }
 }
