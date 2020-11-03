@@ -26,6 +26,7 @@ public abstract class AbstractCommand implements  Command{
     protected String error;
     protected static final String REGEX = "^(?<command>\\w*)(\\s*[\"|']?(?<repo>\\w*))?[\"|']?(\\s*[\"|']?(?<run>.*[^\"]))?\"?$";
     protected ArrayList<String> args = new ArrayList<>();
+    private boolean window = false;
 
     protected AbstractCommand(String name, String version, String desc, String command) {
         this.name = name;
@@ -62,6 +63,8 @@ public abstract class AbstractCommand implements  Command{
     }
 
     public void exec() throws CommandErrorException{
+        if(args.size() == 0)
+            throw new CommandNotFoundException("No se ha encontrado el commando");
         if(!args.get(0).equalsIgnoreCase(command))
             throw new CommandNotFoundException("No se ha encontrado el commando");
         String repo = Constant.REPO_HOME + args.get(1) + Constant.REPO_EXT;
@@ -73,10 +76,16 @@ public abstract class AbstractCommand implements  Command{
         run();
     }
 
+    /**
+     * Check if the os is windows
+     * @return boolean     */
+    protected boolean isWindow(){
+        return System.getProperty("os.name").toLowerCase().contains("win");
+    }
+
     protected Process exec(String command) throws IOException {
-        String OS = System.getProperty("os.name").toLowerCase();
 //        for windows
-        if(OS.contains("win"))
+        if(isWindow())
             return Runtime.getRuntime().exec(new String[]{"cmd","/c" ,command}, null, new File(repo));
         else {
 //            for unix
