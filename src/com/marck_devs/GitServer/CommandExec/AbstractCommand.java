@@ -84,14 +84,18 @@ public abstract class AbstractCommand implements  Command{
         return System.getProperty("os.name").toLowerCase().contains("win");
     }
 
-    protected Process exec(String command) throws IOException {
+    protected Process exec(String command, @Nullable File file) throws IOException {
 //        for windows
         if(isWindow())
-            return Runtime.getRuntime().exec(new String[]{"cmd","/c" ,command}, null, new File(repo));
+            return Runtime.getRuntime().exec(new String[]{"cmd","/c" ,command}, null, (file != null ? file : new File(repo)));
         else {
 //            for unix
-            return Runtime.getRuntime().exec(new String[]{"sh","-c" ,command}, null, new File(repo));
+            return Runtime.getRuntime().exec(new String[]{"sh","-c" ,command}, null, (file != null ? file : new File(repo)));
         }
+    }
+
+    protected Process exec(String command) throws IOException {
+        return exec(command, null);
     }
     
     public String getCommand() {
