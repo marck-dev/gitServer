@@ -5,6 +5,14 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class CommandRemove extends AbstractCommand{
+
+    private static CommandRemove instance;
+    public static CommandRemove instance(){
+        if(instance == null)
+            instance = new CommandRemove();
+        return instance;
+    }
+
     protected CommandRemove() {
         super("Remove repo", "1.0.0", "Remove repository from the server", "RMREPO");
         setHelp("Remove one repository from the server. It need the name of the repository");
