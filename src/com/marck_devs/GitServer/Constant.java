@@ -3,6 +3,7 @@ package com.marck_devs.GitServer;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public final class Constant {
@@ -11,6 +12,7 @@ public final class Constant {
     public static String REPO_HOME = "./";
     public static final String REPO_EXT = ".git";
     public static final String PROPERTIES_FILE = "conf.properties";
+    public static final int MAX_LOG_LENGTH = 14;
 
     private static Properties config;
 
@@ -27,7 +29,7 @@ public final class Constant {
                 REPO_HOME = tmp.endsWith("/") ? tmp : tmp + "/";
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 
