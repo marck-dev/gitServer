@@ -23,15 +23,20 @@ public class LoggerServer extends Thread implements Closeable {
     private static HashMap<Socket, LoggerProcess> process = new HashMap<>();
 
     private LoggerServer() {
-    }
+        System.out.println("Server init");
+}
 
     public void run() {
         try {
+            System.out.println("Server running");
             ServerSocket server = new ServerSocket(Constant.LOGGER_PORT);
             while (true) {
                 checkClients();
                 Socket cliente = server.accept();
                 clientes.add(cliente);
+                LoggerProcess p = new LoggerProcess(cliente);
+                process.put(cliente,p);
+                p.start();
             }
         } catch (IOException e) {
             Logger.LOGGER.log(e);
@@ -41,7 +46,7 @@ public class LoggerServer extends Thread implements Closeable {
 
     public void checkClients() {
         for (Socket s : clientes) {
-            if (s.isClosed()) {
+            if (s.isClosed() || process.get(s).isInterrupted() ) {
                 process.get(s).interrupt();
                 process.remove(s);
                 clientes.remove(s);

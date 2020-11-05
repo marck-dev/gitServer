@@ -13,15 +13,16 @@ public class LoggerProcess extends Thread {
         this.cliente = cliente;
         key = Logger.LOGGER.genIndex();
         out = new PrintWriter(cliente.getOutputStream());
+        out.println("CONNECT TO THE SERVER");
+        System.out.println("Client connected");
+        System.out.println(cliente.getInetAddress().getHostAddress());
 
     }
 
     @Override
     public void run() {
-        while (true) {
-            if (Logger.LOGGER.hasNext(key)) {
-                out.println(Logger.LOGGER.getNext(key));
-            }
+        while (Logger.LOGGER.hasNext(key)) {
+            Logger.LOGGER.getNext(key).printStackTrace(out);
         }
     }
 
