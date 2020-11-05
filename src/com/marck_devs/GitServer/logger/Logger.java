@@ -21,7 +21,7 @@ public class Logger {
         return this;
     }
 
-    public Exception getNext(String index){
+    synchronized public Exception getNext(String index){
         Integer i = clients.get(index);
         Exception out = log.get(i);
         clients.put(index, (i < Constant.MAX_LOG_LENGTH ) ? i+1 : 0);
