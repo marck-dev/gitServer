@@ -1,7 +1,6 @@
 package com.marck_devs.GitServer.CommandExec;
 
 import com.marck_devs.GitServer.Constant;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +35,7 @@ public abstract class AbstractCommand implements  Command{
         load();
     }
 
-    public void load(@Nullable String name){
+    public void load(String name){
         String key = name;
         if(name == null)
             key = command;
@@ -84,7 +83,7 @@ public abstract class AbstractCommand implements  Command{
         return System.getProperty("os.name").toLowerCase().contains("win");
     }
 
-    protected Process exec(String command, @Nullable File file) throws IOException {
+    protected Process exec(String command,  File file) throws IOException {
 //        for windows
         if(isWindow())
             return Runtime.getRuntime().exec(new String[]{"cmd","/c" ,command}, null, (file != null ? file : new File(repo)));

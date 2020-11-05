@@ -1,7 +1,5 @@
 package com.marck_devs.GitServer.CommandExec;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -22,24 +20,22 @@ public final class CommandDB {
 
     private CommandDB(){}
 
-    public  void put(@NotNull String key,@NotNull Command value){
+    public  void put( String key, Command value){
         commands.put(key, value);
     }
 
-    public  Command getCommand(@NotNull String key){
+    public  Command getCommand( String key){
         return commands.get(key);
     }
 
     public  HashMap<String, Command> getAsMap(){
         return commands;
     }
-
-    @Contract(pure = true)
     public Set<String> getKeys(){
         return commands.keySet();
     }
 
-    public  boolean existsKey(@NotNull String key){
+    public  boolean existsKey( String key){
         return commands.containsKey(key);
     }
 }

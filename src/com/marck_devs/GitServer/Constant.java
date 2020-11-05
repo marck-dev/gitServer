@@ -19,14 +19,16 @@ public final class Constant {
     static {
         config = new Properties();
         try {
-            config.load(new FileInputStream(new File(PROPERTIES_FILE)));
-            if(config.containsKey("Logger.Port"))
-                LOGGER_PORT = (int) config.get("Logger.Port");
-            if(config.containsKey("CommadManager.Port"))
-                COMMAND_PORT = (int) config.get("CommandManager.Port");
-            if(config.containsKey("RepoManager.HomeFolder")){
-                String tmp = (String) config.get("RepoManager.HomeFolder");
-                REPO_HOME = tmp.endsWith("/") ? tmp : tmp + "/";
+            if(new File(PROPERTIES_FILE).exists()) {
+                config.load(new FileInputStream(new File(PROPERTIES_FILE)));
+                if (config.containsKey("Logger.Port"))
+                    LOGGER_PORT = (int) config.get("Logger.Port");
+                if (config.containsKey("CommadManager.Port"))
+                    COMMAND_PORT = (int) config.get("CommandManager.Port");
+                if (config.containsKey("RepoManager.HomeFolder")) {
+                    String tmp = (String) config.get("RepoManager.HomeFolder");
+                    REPO_HOME = tmp.endsWith("/") ? tmp : tmp + "/";
+                }
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());
